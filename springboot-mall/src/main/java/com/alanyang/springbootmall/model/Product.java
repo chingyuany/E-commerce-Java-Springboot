@@ -2,7 +2,7 @@ package com.alanyang.springbootmall.model;
 
 import com.alanyang.springbootmall.constant.ProductCategory;
 
-import java.util.Date;
+import java.security.Timestamp;
 
 public class Product {
     private Integer productId;
@@ -12,8 +12,8 @@ public class Product {
     private Integer price;
     private Integer stock;
     private String description;
-    private Date createdDate;
-    private Date lastModifiedDate;
+    private Timestamp createdDate;
+    private Timestamp lastModifiedDate;
 
     public Integer getProductId() {
         return productId;
@@ -71,19 +71,19 @@ public class Product {
         this.description = description;
     }
 
-    public Date getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public Timestamp getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(Timestamp lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 }
