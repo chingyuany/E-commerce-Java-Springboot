@@ -23,7 +23,7 @@ public class ProductRowMapper implements RowMapper {
 
         product.setImageUrl(resultSet.getString("image_url"));
         product.setPrice(resultSet.getInt("price"));
-        product.setPrice(resultSet.getInt("stock"));
+        product.setStock(resultSet.getInt("stock"));
         product.setDescription(resultSet.getString("description"));
         product.setCreatedDate(resultSet.getTimestamp("created_date"));
         product.setLastModifiedDate(resultSet.getTimestamp("last_modified_date"));

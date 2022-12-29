@@ -1,27 +1,23 @@
-package com.alanyang.springbootmall.model;
+package com.alanyang.springbootmall.dto;
 
 import com.alanyang.springbootmall.constant.ProductCategory;
 
-import java.sql.Timestamp;
+import javax.validation.constraints.NotNull;
 
-public class Product {
-    private Integer productId;
+
+public class ProductRequest {
+
+    @NotNull
     private String productName;
+    @NotNull
     private ProductCategory category;
+    @NotNull
     private String imageUrl;
+    @NotNull
     private Integer price;
+    @NotNull
     private Integer stock;
     private String description;
-    private Timestamp createdDate;
-    private Timestamp lastModifiedDate;
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
 
     public String getProductName() {
         return productName;
@@ -69,21 +65,5 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Timestamp getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Timestamp lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
     }
 }
