@@ -2,6 +2,7 @@ package com.alanyang.springbootmall.service.impl;
 
 import com.alanyang.springbootmall.constant.ProductCategory;
 import com.alanyang.springbootmall.dao.ProductDao;
+import com.alanyang.springbootmall.dto.ProductQueryParams;
 import com.alanyang.springbootmall.dto.ProductRequest;
 import com.alanyang.springbootmall.model.Product;
 import com.alanyang.springbootmall.service.ProductService;
@@ -17,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override

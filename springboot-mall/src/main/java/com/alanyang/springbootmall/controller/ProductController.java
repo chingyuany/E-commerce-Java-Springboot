@@ -1,6 +1,7 @@
 package com.alanyang.springbootmall.controller;
 
 import com.alanyang.springbootmall.constant.ProductCategory;
+import com.alanyang.springbootmall.dto.ProductQueryParams;
 import com.alanyang.springbootmall.dto.ProductRequest;
 import com.alanyang.springbootmall.model.Product;
 import com.alanyang.springbootmall.service.ProductService;
@@ -22,8 +23,12 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
     ) {
-       List<Product> productList = productService.getProducts(category, search);
-       return ResponseEntity.status(HttpStatus.OK).body(productList);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParams);
+        return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
     @GetMapping("/products/{productId}")
