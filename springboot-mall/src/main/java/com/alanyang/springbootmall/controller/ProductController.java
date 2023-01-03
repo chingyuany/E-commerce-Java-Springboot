@@ -4,6 +4,7 @@ import com.alanyang.springbootmall.constant.ProductCategory;
 import com.alanyang.springbootmall.dto.ProductQueryParams;
 import com.alanyang.springbootmall.dto.ProductRequest;
 import com.alanyang.springbootmall.model.Product;
+import com.alanyang.springbootmall.util.Page;
 import com.alanyang.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProducts(
+    public ResponseEntity<Page<Product>> getAllProducts(
 //            filtering
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
@@ -42,8 +43,19 @@ public class ProductController {
         productQueryParams.setLimit(limit);
         productQueryParams.setOffset(offset);
 
+//        get product list
         List<Product> productList = productService.getProducts(productQueryParams);
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+
+//        get total product count
+        Integer total = productService.countProducts(productQueryParams);
+
+//        pagination
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productList);
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     @GetMapping("/products/{productId}")
