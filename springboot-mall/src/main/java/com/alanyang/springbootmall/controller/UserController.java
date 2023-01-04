@@ -1,5 +1,6 @@
 package com.alanyang.springbootmall.controller;
 
+import com.alanyang.springbootmall.dto.UserLoginRequest;
 import com.alanyang.springbootmall.dto.UserRegisterRequest;
 import com.alanyang.springbootmall.model.User;
 import com.alanyang.springbootmall.service.UserService;
@@ -24,5 +25,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) {
+        User user = userService.login(userLoginRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
 
 }
