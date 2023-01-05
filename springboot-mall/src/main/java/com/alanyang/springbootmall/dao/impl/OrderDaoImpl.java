@@ -1,6 +1,7 @@
 package com.alanyang.springbootmall.dao.impl;
 
 import com.alanyang.springbootmall.dao.OrderDao;
+import com.alanyang.springbootmall.dto.OrderQueryParams;
 import com.alanyang.springbootmall.model.Order;
 import com.alanyang.springbootmall.model.OrderItem;
 import com.alanyang.springbootmall.rowmapper.OrderItemRowMapper;
@@ -48,6 +49,39 @@ public class OrderDaoImpl implements OrderDao {
         List<OrderItem> orderItemList = namedParametgerJdbcTemplate.query(sql, map, new OrderItemRowMapper());
         return orderItemList;
     }
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT COUNT(*) FROM `order` WHERE 1=1";
+        Map<String, Object> map = new HashMap<>();
+        sql = addFilteringSql(sql, map, orderQueryParams);
+        Integer total = namedParametgerJdbcTemplate.queryForObject(sql, map, Integer.class);
+        return total;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT order_id, user_id, total_amount, created_date, last_modified_date FROM `order` WHERE 1=1";
+        Map<String, Object> map = new HashMap<>();
+//        query condition
+        sql = addFilteringSql(sql, map, orderQueryParams);
+//        sorting
+        sql = sql + " ORDER BY created_date DESC";
+//        paging
+        sql = sql + " LIMIT :limit OFFSET :offset";
+        map.put("offset", orderQueryParams.getOffset());
+        map.put("limit", orderQueryParams.getLimit());
+        List<Order> orderList = namedParametgerJdbcTemplate.query(sql, map, new OrderRowMapper());
+        return orderList;
+    }
+    private String addFilteringSql(String sql, Map<String, Object> map, OrderQueryParams orderQueryParams){
+        if (orderQueryParams.getUserId() != null) {
+            sql = sql + " AND user_id = :userId";
+            map.put("userId", orderQueryParams.getUserId());
+        }
+        return sql;
+    }
+
     @Override
     public Integer createOrder(Integer userId, Integer totalAmount) {
         String sql = "INSERT INTO `order` (user_id, total_amount, created_date, last_modified_date) VALUES (:userId, :totalAmount, :createdDate, :lastModifiedDate)";
